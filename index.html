@@ -3,25 +3,37 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Quiz — Образовательная платформа</title>
+    <title>Quiz - Образовательная платформа</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <main class="container" aria-live="polite">
+    <main class="container">
       <header class="header">
-        <h1 id="quiz-title">Загрузка…</h1>
+        <h1 id="quiz-title">Загрузка...</h1>
         <div class="meta">
-          <div id="progress" aria-label="Прогресс теста">Вопрос — / —</div>
-          <div id="timer" aria-label="Оставшееся время">—:—</div>
+          <div id="progress" aria-label="Прогресс теста">Вопрос - / -</div>
+          <div id="timer" aria-label="Оставшееся время">--:--</div>
         </div>
       </header>
 
+      <div id="live-status" class="sr-only" aria-live="polite"></div>
+
+      <section id="loading-section" class="card" aria-live="polite">
+        <p>Загрузка теста...</p>
+      </section>
+
+      <section id="error-section" class="card error hidden" role="alert">
+        <h2>Не удалось загрузить тест</h2>
+        <p id="error-message">Проверьте файл data/questions.json и попробуйте снова.</p>
+      </section>
+
       <section
         id="question-section"
-        class="card"
+        class="card hidden"
         aria-labelledby="question-text"
       >
-        <div id="question-text" class="question-text">Загрузка вопроса…</div>
+        <h2 id="review-heading" class="review-heading hidden">Просмотр ответов</h2>
+        <div id="question-text" class="question-text" tabindex="-1">Загрузка вопроса...</div>
         <form
           id="options-form"
           class="options"
@@ -30,7 +42,7 @@
         ></form>
       </section>
 
-      <nav class="actions">
+      <nav id="quiz-actions" class="actions hidden" aria-label="Навигация по тесту">
         <button id="btn-prev" class="btn" type="button" aria-label="Назад">
           Назад
         </button>
@@ -45,18 +57,26 @@
         </button>
         <button
           id="btn-finish"
-          class="btn btn-accent"
+          class="btn btn-accent hidden"
           type="button"
           aria-label="Завершить"
           disabled
         >
           Завершить
         </button>
+        <button
+          id="btn-back-result"
+          class="btn btn-primary hidden"
+          type="button"
+          aria-label="Вернуться к результату"
+        >
+          К результату
+        </button>
       </nav>
 
       <section id="result-section" class="card hidden" aria-live="polite">
         <h2>Результат</h2>
-        <p id="result-summary">—</p>
+        <p id="result-summary">-</p>
         <div class="actions">
           <button id="btn-review" class="btn" type="button">
             Посмотреть ответы
